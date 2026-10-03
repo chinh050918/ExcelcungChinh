@@ -1,0 +1,12 @@
+const puppeteer = require('puppeteer-core');
+(async()=>{const b=await puppeteer.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe',headless:'new'});
+const p=await b.newPage();await p.goto(''+require('url').pathToFileURL(require('path').join(__dirname,'..','site','index.html')).href+'#/bang-nhap',{waitUntil:'networkidle0'});
+const out=await p.evaluate(()=>{const E=ECC_ENGINE,bad=[];let n=0;
+ const all=[];ECC.parts.forEach(pt=>{pt.lessons.forEach(l=>(l.exercises||[]).forEach(x=>all.push([pt.id+'/'+l.id+'/'+x.id,x])));(pt.test.practice||[]).forEach(x=>all.push([pt.id+'/test/'+x.id,x]));});
+ all.forEach(([k,x])=>{const sol={};(x.answers||[]).forEach(a=>sol[a.cell.toUpperCase()]=a.solution);
+  (x.fill?(Array.isArray(x.fill)?x.fill:[x.fill]):[]).forEach(fl=>{const L=E.expandRange(fl.range),f=E.parseAddr(L[0]);L.forEach(c=>{const q=E.parseAddr(c);sol[c]=E.shiftFormula(fl.solution,q.row-f.row,q.col-f.col)})});
+  const d=document.createElement('div');document.body.appendChild(d);
+  const s=ECC_SHEET.create(d,x,{mode:'practice',saved:sol});const r=s.grade();n++;
+  if(!r.allOk)bad.push(k+' '+JSON.stringify(Object.entries(r.cells).filter(e=>!e[1].ok).map(e=>e[0]+':'+e[1].why)));d.remove();});
+ return n+' bài tập, sai: '+bad.length+'\n'+bad.join('\n');});
+console.log(out);await b.close();})();
