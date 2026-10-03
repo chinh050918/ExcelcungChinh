@@ -1,0 +1,16 @@
+{
+  "name": "excelcungchinh",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Web học Excel cho dân văn phòng: bài giảng tiếng Việt, bảng tính thực hành chấm điểm tự động.",
+  "scripts": {
+    "start": "node tools/serve.js",
+    "check": "node tools/validate.js && node tools/check-exercises.js",
+    "test": "node tools/smoke-test.js",
+    "build:artifact": "node tools/build-artifact.js"
+  },
+  "devDependencies": {
+    "hyperformula": "3.4.0",
+    "puppeteer-core": "^23.11.1"
+  }
+}
